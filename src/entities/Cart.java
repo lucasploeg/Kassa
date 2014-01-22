@@ -1,34 +1,46 @@
 package entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Cart {
-	
+
 	private String customerFirstName;
 	private String customerLastName;
 	private int counterNumber;
-	private ArrayList<Product> productList;
-	
-	public Cart(int counterNumber){
+
+	private HashMap<Product, Integer> productList;
+
+	public Cart(int counterNumber) {
 		this.counterNumber = counterNumber;
+		productList = new HashMap<Product, Integer>();
+
 		getData(counterNumber);
-		
-		productList = new ArrayList<Product>();
 	}
-	
-	public String getCustomerFirstName(){
+
+	public String getCustomerFirstName() {
 		return customerFirstName;
 	}
-	
-	public String getCustomerLastname(){
+
+	public String getCustomerLastname() {
 		return customerLastName;
 	}
-	
-	public int getCounterNumber(){
+
+	public int getCounterNumber() {
 		return counterNumber;
 	}
-	
-	private String getData(int counterNumber){
+
+	public double getCartPrice() {
+		double price = 0.0;
+
+		for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
+			price = price + (entry.getKey().getPrice() * entry.getValue());
+		}
+
+		return price;
+	}
+
+	private String getData(int counterNumber) {
 		return "Data";
 	}
 }
