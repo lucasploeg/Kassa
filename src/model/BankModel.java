@@ -23,5 +23,4 @@ public class BankModel {
 	public boolean pinNumberIsOk(int number){
 		return true;
 	}
-	
 }
