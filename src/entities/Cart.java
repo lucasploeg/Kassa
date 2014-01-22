@@ -8,6 +8,7 @@ public class Cart {
 	private String customerFirstName;
 	private String customerLastName;
 	private int counterNumber;
+	private Survey survey;
 
 	private HashMap<Product, Integer> productList;
 
@@ -38,6 +39,18 @@ public class Cart {
 		}
 
 		return price;
+	}
+	
+	public void initiateSurvey(){
+		survey = new Survey(this);
+	}
+	
+	public Survey getSurvey(){
+		return survey;
+	}
+	
+	public HashMap<Product,Integer> getProductList(){
+		return productList;
 	}
 
 	private String getData(int counterNumber) {

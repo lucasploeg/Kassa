@@ -13,6 +13,7 @@ public class Counter {
 	private static final String question = "Wilt u afrekenen?";
 	private static final String answerYes = "Ja";
 	private static final String answerNo = "Nee";
+	private static final String notAllProductsScanned = "Niet alle producten zijn door de klant gescand.";
 	
 	private int counterNumber;
 	private ArrayList<Cart> carts;
@@ -57,5 +58,9 @@ public class Counter {
 	
 	public String getAnswerNo(){
 		return answerNo;
+	}
+	
+	public String getNotAllProductsScanned(){
+		return notAllProductsScanned;
 	}
 }
