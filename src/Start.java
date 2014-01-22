@@ -1,3 +1,4 @@
+import entities.Counter;
 import model.BankModel;
 import view.MainWindow;
 
@@ -10,6 +11,9 @@ public class Start {
 		
 		BankModel bm = BankModel.getInstance();
 		System.out.println(bm);
+		
+		Counter cnt = new Counter(1);
+		System.out.println(cnt.getCounterQR());
 		
 	}
 	

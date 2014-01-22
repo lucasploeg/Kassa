@@ -1,18 +1,32 @@
 package model;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 public class BarcodeModel {
 
 	private static BarcodeModel instance;
-	
-	private HashMap<String,BufferedImage> qrCodes;
+
+	private HashMap<String, BufferedImage> qrCodes;
 
 	private BarcodeModel() {
-		qrCodes = new HashMap<String,BufferedImage>();
-		
-		
+		qrCodes = new HashMap<String, BufferedImage>();
+
+		for (int i = 1; i < 6; i++) {
+			String name = "Kassa" + i;
+
+			BufferedImage img = null;
+			try {
+				img = ImageIO.read(new File("qrcodes/"+name+".jpg"));
+				qrCodes.put(name, img);
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+		}
 	}
 
 	public static BarcodeModel getInstance() {
@@ -24,8 +38,7 @@ public class BarcodeModel {
 	}
 
 	public BufferedImage getQR(int counterNumber) {
-		// TODO Auto-generated method stub
-		return null;
+		return qrCodes.get("Kassa"+counterNumber);
 	}
 
 }
