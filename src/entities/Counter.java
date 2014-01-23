@@ -35,7 +35,7 @@ public class Counter {
 		return scanMessage;
 	}
 	
-	public void getCurrentCustomerCart(){
+	public void retrieveCurrentCustomerCart(){
 		Cart cart = new Cart(counterNumber);
 		carts.add(cart);
 	}
@@ -44,7 +44,7 @@ public class Counter {
 		return carts.get(carts.size()-1);
 	}
 	
-	public String getControleQuestion(String firstName, String lastName){
+	public String getControlQuestion(String firstName, String lastName){
 		return (helloMsg + " " +  firstName + " " + lastName);
 	}
 	

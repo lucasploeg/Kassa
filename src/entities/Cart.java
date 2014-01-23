@@ -9,14 +9,13 @@ public class Cart {
 	private String customerLastName;
 	private int counterNumber;
 	private Survey survey;
-
 	private HashMap<Product, Integer> productList;
 
 	public Cart(int counterNumber) {
 		this.counterNumber = counterNumber;
 		productList = new HashMap<Product, Integer>();
 
-		getData(counterNumber);
+		setData();
 	}
 
 	public String getCustomerFirstName() {
@@ -53,7 +52,10 @@ public class Cart {
 		return productList;
 	}
 
-	private String getData(int counterNumber) {
-		return "Data";
+	private void setData() {
+		customerFirstName = "Lucas";
+		customerLastName = "Ploeg";
+		Product product = new Product("EAN123","Cola",1.3);
+		productList.put(product, 13);
 	}
 }
