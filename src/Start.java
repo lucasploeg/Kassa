@@ -1,6 +1,8 @@
 import model.CounterModel;
+import controller.Server;
 import entities.Cart;
 import entities.Counter;
+import entities.Survey;
 
 
 public class Start {
@@ -23,14 +25,11 @@ public class Start {
 		System.out.println(cart.getCartPrice());
 		
 		cart.initiateSurvey();
-		System.out.println(cart.getSurvey().productsLeftToCheck());
-		cart.getSurvey().productChecked();
-		System.out.println(cart.getSurvey().productsLeftToCheck());
-		cart.getSurvey().productChecked();
+		
 		System.out.println(cart.getSurvey().productsLeftToCheck());
 		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN123"));
-		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN125"));
-		
+		System.out.println(cart.getSurvey().productsLeftToCheck());
+		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN125"));		
 	}
 	
 }

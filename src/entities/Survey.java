@@ -1,36 +1,50 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import controller.Server;
 
 public class Survey {
 
-	private static final int productsToCheck = 3;
-	private int productsLeftToCheck = productsToCheck;
+	private static final int productsToCheck = 5;
+	private ArrayList<String> scannedProducts;
 	private Cart cart;
+	private Server server;
 
 	public Survey(Cart cart) {
 		this.cart = cart;
-	}
+		scannedProducts = new ArrayList<String>();
 
-	public void productChecked() {
-		productsLeftToCheck--;
+		createScanner();
 	}
 
 	public int productsLeftToCheck() {
-		return productsLeftToCheck;
+		return (productsToCheck - scannedProducts.size());
 	}
 
 	public boolean productIsScannedByCustomer(String EAN) {
 		HashMap<Product, Integer> productList = cart.getProductList();
 
 		boolean scanned = false;
-		
+
 		for (Product product : productList.keySet()) {
-			if(product.getEAN().equals(EAN)){
+			if (product.getEAN().equals(EAN)) {
 				scanned = true;
+				scannedProducts.add(EAN);
 				break;
 			}
 		}
 		return scanned;
+	}
+	
+	public void addProductToScannedList(String EAN){
+		scannedProducts.add(EAN);
+	}
+
+	private void createScanner() {
+		server = new Server(this);
+
+		(new Thread(server)).start();
 	}
 }
