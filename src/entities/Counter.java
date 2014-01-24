@@ -8,7 +8,6 @@ import model.BarcodeModel;
 
 public class Counter {
 	
-	private static final String scanMessage = "Scan onderstaande barcode a.u.b.";
 	private static final String helloMsg = "Dag";
 	private static final String question = "Wilt u afrekenen?";
 	private static final String answerYes = "Ja";
@@ -30,10 +29,6 @@ public class Counter {
 	
 	public BufferedImage getCounterQR(){
 		return BarcodeModel.getInstance().getQR(counterNumber);
-	}
-	
-	public String getScanMessage(){
-		return scanMessage;
 	}
 	
 	public void retrieveCurrentCustomerCart(){

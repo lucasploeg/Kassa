@@ -11,6 +11,7 @@ public class BarcodeModel {
 
 	private static BarcodeModel instance;
 
+	private static final String scanMessage = "Scan onderstaande barcode a.u.b.";
 	private HashMap<String, BufferedImage> qrCodes;
 
 	private BarcodeModel() {
@@ -39,6 +40,10 @@ public class BarcodeModel {
 
 	public BufferedImage getQR(int counterNumber) {
 		return qrCodes.get("Kassa"+counterNumber);
+	}
+	
+	public String getScanMessage(){
+		return scanMessage;
 	}
 
 }

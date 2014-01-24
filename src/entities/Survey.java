@@ -3,7 +3,8 @@ package entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import controller.Server;
+import model.Server;
+
 
 public class Survey {
 

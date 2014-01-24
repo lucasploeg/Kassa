@@ -2,10 +2,11 @@ package view;
 
 import java.awt.CardLayout;
 import java.awt.EventQueue;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.ViewController;
 
 public class MainWindow {
 
@@ -13,14 +14,13 @@ public class MainWindow {
 	private JFrame mainFrame;
 	private JPanel mainPanel;
 	private CardLayout layout;
-	private ArrayList<JPanel> views;
 
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	public static MainWindow getInstance(ArrayList<JPanel> views) {
+	public static MainWindow getInstance() {
 		if (instance == null) {
-			instance = new MainWindow(views);
+			instance = new MainWindow();
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
@@ -38,8 +38,7 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	private MainWindow(ArrayList<JPanel> views) {
-		this.views = views;
+	private MainWindow() {
 	}
 
 	/**
@@ -48,24 +47,26 @@ public class MainWindow {
 	private void initialize() {
 		mainFrame = new JFrame();
 		mainFrame.setTitle("Kassa");
-		mainFrame.setBounds(100, 100, 1300, 803);
+		mainFrame.setBounds(100, 100, 1009, 632);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(null);
 		
 		mainPanel = new JPanel();
-		mainPanel.setBounds(0, 0, 1284, 765);
+		mainPanel.setBounds(0, 0, 1000, 600);
 		mainFrame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
 		
 		layout = (CardLayout)(mainPanel.getLayout());
 		
-		for(JPanel view : views){
+		for(JPanel view : ViewController.getInstance().getViews()){
 			mainPanel.add(view, view.getName());
 		}
+		
+		show(ViewController.getInstance().getView(BarcodeView.NAME));
 	}
 	
-	public void show(JPanel panel){
-		System.out.println(panel.getName());
-		layout.show(mainPanel, panel.getName());
+	public void show(JPanel view){
+		System.out.println("Showing: " + view.getName());
+		layout.show(mainPanel, view.getName());
 	}
 }

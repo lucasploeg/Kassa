@@ -14,15 +14,14 @@ import view.SurveyView;
 public class ViewController {
 
 	private static ViewController instance;
-	
+
 	private MainWindow mainWindow;
 	private ArrayList<JPanel> views;
 
 	private ViewController() {
 		initiateViews();
-		
-		mainWindow = MainWindow.getInstance(views);
-		setView(SurveyView.NAME);
+
+		mainWindow = MainWindow.getInstance();
 	}
 
 	public static ViewController getInstance() {
@@ -32,22 +31,36 @@ public class ViewController {
 
 		return instance;
 	}
-	
-	private void initiateViews(){
+
+	private void initiateViews() {
 		views = new ArrayList<JPanel>();
-		
+
 		views.add(BarcodeView.getInstance());
 		views.add(PaymentView.getInstance());
 		views.add(ProductView.getInstance());
 		views.add(QuestionView.getInstance());
 		views.add(SurveyView.getInstance());
 	}
-	
-	public void setView(String name){
-		for(JPanel view : views){
-			if(view.getName().equals(name)){
+
+	public void showView(String name) {
+		for (JPanel view : views) {
+			if (view.getName().equals(name)) {
 				mainWindow.show(view);
+				break;
 			}
 		}
+	}
+
+	public JPanel getView(String name) {
+		for (JPanel view : views) {
+			if (view.getName().equals(name)) {
+				return view;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<JPanel> getViews(){
+		return views;
 	}
 }
