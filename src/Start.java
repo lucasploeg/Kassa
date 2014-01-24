@@ -11,7 +11,6 @@ public class Start {
 	public static void main(String[] args){
 		
 		CounterModel.getInstance().initiateNewCounter(1);
-		ViewController.getInstance();
 		
 		/*MainWindow mw = MainWindow.getInstance();
 		System.out.println(mw);

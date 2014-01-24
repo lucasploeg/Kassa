@@ -1,7 +1,7 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Font;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -12,14 +12,15 @@ import controller.BarcodeController;
 
 public class BarcodeView extends JPanel{
 	
-	private static BarcodeView instance;
+	private static HashMap<Integer, BarcodeView> instances = new HashMap<Integer, BarcodeView>();
 	public static final String NAME = "BarcodeView";
+	private int counterNumber;
 	
 	JLabel lblQuestion;
 	
-	private BarcodeView() {
+	private BarcodeView(int counterNumber) {
 		setLayout(null);
-		
+		this.counterNumber = counterNumber;
 		lblQuestion = new JLabel("lblQuestion");
 		lblQuestion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQuestion.setFont(new Font("Tahoma", Font.BOLD, 50));
@@ -31,21 +32,24 @@ public class BarcodeView extends JPanel{
 		
 	}
 
-	public static BarcodeView getInstance() {
+	public static BarcodeView getInstance(int counterNumber) {
+		BarcodeView instance = instances.get(counterNumber);
+		
 		if (instance == null) {
-			instance = new BarcodeView();
+			instance = new BarcodeView(counterNumber);
 			instance.setName(NAME);
+			instances.put(counterNumber, instance);
 		}
 
 		return instance;
 	}
 	
 	private void setLblQuestionText(){
-		lblQuestion.setText(BarcodeController.getInstance().getScanMessage());
+		lblQuestion.setText(BarcodeController.getInstance(counterNumber).getScanMessage());
 	}
 	
 	private void setLblQR(){
-		ImageIcon image = new ImageIcon("qrcodes/Kassa1.jpg");
+		ImageIcon image = new ImageIcon(BarcodeController.getInstance(counterNumber).getScanImage());
 		
 		JLabel lblQR = new JLabel("", image, JLabel.CENTER);
 		lblQR.setBounds(383, 258, 225, 239);

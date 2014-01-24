@@ -3,6 +3,8 @@ package entities;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import controller.ViewController;
+
 import model.BarcodeModel;
 
 
@@ -14,6 +16,7 @@ public class Counter {
 	private static final String answerNo = "Nee";
 	private static final String notAllProductsScanned = "Niet alle producten zijn door de klant gescand.";
 	
+	private ViewController viewController;
 	private int counterNumber;
 	private ArrayList<Cart> carts;
 	private boolean active = false;
@@ -21,6 +24,7 @@ public class Counter {
 	public Counter(int counterNumber){
 		this.counterNumber = counterNumber;
 		carts = new ArrayList<Cart>();
+		viewController = ViewController.getInstance(getCounterNumber());
 	}
 	
 	public int getCounterNumber(){

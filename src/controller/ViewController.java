@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 
@@ -13,20 +14,24 @@ import view.SurveyView;
 
 public class ViewController {
 
-	private static ViewController instance;
+	private static HashMap<Integer, ViewController> instances = new HashMap<Integer, ViewController>();
 
+	private int counterNumber;
 	private MainWindow mainWindow;
 	private ArrayList<JPanel> views;
 
-	private ViewController() {
-		initiateViews();
-
-		mainWindow = MainWindow.getInstance();
+	private ViewController(int counterNumber) {
+		this.counterNumber = counterNumber;
+		initiateViews();		
+		mainWindow = MainWindow.getInstance(counterNumber);
 	}
 
-	public static ViewController getInstance() {
+	public static ViewController getInstance(int counterNumber) {
+		ViewController instance = instances.get(counterNumber);
+		
 		if (instance == null) {
-			instance = new ViewController();
+			instance = new ViewController(counterNumber);
+			instances.put(counterNumber, instance);
 		}
 
 		return instance;
@@ -35,11 +40,11 @@ public class ViewController {
 	private void initiateViews() {
 		views = new ArrayList<JPanel>();
 
-		views.add(BarcodeView.getInstance());
-		views.add(PaymentView.getInstance());
-		views.add(ProductView.getInstance());
-		views.add(QuestionView.getInstance());
-		views.add(SurveyView.getInstance());
+		views.add(BarcodeView.getInstance(counterNumber));
+		views.add(PaymentView.getInstance(counterNumber));
+		views.add(ProductView.getInstance(counterNumber));
+		views.add(QuestionView.getInstance(counterNumber));
+		views.add(SurveyView.getInstance(counterNumber));
 	}
 
 	public void showView(String name) {

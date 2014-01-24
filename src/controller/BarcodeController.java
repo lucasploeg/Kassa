@@ -1,25 +1,35 @@
 package controller;
 
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+
 import model.BarcodeModel;
 
 public class BarcodeController {
 
-private static BarcodeController instance;
-	
-	private BarcodeController(){
-		//empty
+	private static HashMap<Integer,BarcodeController> instances = new HashMap<Integer,BarcodeController>();
+	private int counterNumber;
+
+	private BarcodeController(int counterNumber) {
+		this.counterNumber = counterNumber;
 	}
-	
-	public static BarcodeController getInstance(){
-		if(instance == null){
-			instance = new BarcodeController();
-		}
+
+	public static BarcodeController getInstance(int counterNumber) {
+		BarcodeController instance = instances.get(counterNumber);
 		
+		if (instance == null) {
+			instance = new BarcodeController(counterNumber);
+			instances.put(counterNumber,instance);
+		}
+
 		return instance;
 	}
-	
-	public String getScanMessage(){
+
+	public String getScanMessage() {
 		return BarcodeModel.getInstance().getScanMessage();
 	}
 	
+	public BufferedImage getScanImage(){
+		return BarcodeModel.getInstance().getQR(counterNumber);
+	}
 }
