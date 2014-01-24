@@ -1,13 +1,18 @@
+import controller.ViewController;
+import model.BankModel;
 import model.CounterModel;
-import controller.Server;
+import view.MainWindow;
 import entities.Cart;
 import entities.Counter;
-import entities.Survey;
 
 
 public class Start {
 
 	public static void main(String[] args){
+		
+		CounterModel.getInstance().initiateNewCounter(1);
+		ViewController.getInstance();
+		
 		/*MainWindow mw = MainWindow.getInstance();
 		System.out.println(mw);
 		
@@ -15,10 +20,10 @@ public class Start {
 		System.out.println(bm);
 		
 		Counter cnt = new Counter(1);
-		System.out.println(cnt.getCounterQR());*/
+		System.out.println(cnt.getCounterQR());
 		
 		CounterModel.getInstance().initiateNewCounter(1);
-		Counter cnt = CounterModel.getInstance().getCounter(1);
+		Counter cnt2 = CounterModel.getInstance().getCounter(1);
 		
 		cnt.retrieveCurrentCustomerCart();
 		Cart cart = cnt.getCurrentCart();
@@ -29,7 +34,7 @@ public class Start {
 		System.out.println(cart.getSurvey().productsLeftToCheck());
 		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN123"));
 		System.out.println(cart.getSurvey().productsLeftToCheck());
-		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN125"));		
+		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN125"));*/		
 	}
 	
 }

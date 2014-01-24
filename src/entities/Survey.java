@@ -31,7 +31,6 @@ public class Survey {
 		for (Product product : productList.keySet()) {
 			if (product.getEAN().equals(EAN)) {
 				scanned = true;
-				scannedProducts.add(EAN);
 				break;
 			}
 		}

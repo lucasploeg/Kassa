@@ -17,6 +17,7 @@ public class Counter {
 	
 	private int counterNumber;
 	private ArrayList<Cart> carts;
+	private boolean active = false;
 	
 	public Counter(int counterNumber){
 		this.counterNumber = counterNumber;
@@ -62,5 +63,13 @@ public class Counter {
 	
 	public String getNotAllProductsScanned(){
 		return notAllProductsScanned;
+	}
+	
+	public void setActive(){
+		active = true;
+	}
+	
+	public boolean isActive(){
+		return active;
 	}
 }

@@ -47,8 +47,13 @@ public class Server implements Runnable {
 				
 				survey.addProductToScannedList(EAN);
 				
+				System.out.println("Left: " + survey.productsLeftToCheck());
+				
 				if(survey.productsLeftToCheck() == 0){
 					dataOutputStream.writeUTF("quit");
+					socket.close();
+					dataInputStream.close();
+					dataOutputStream.close();
 				} else {
 					dataOutputStream.writeUTF("continue");
 				}	
