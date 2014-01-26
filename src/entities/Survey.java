@@ -8,6 +8,8 @@ import model.ScannerServer;
 
 public class Survey {
 
+	private static boolean SURVEY_ON = true;
+	
 	private static final int productsToCheck = 5;
 	private ArrayList<String> scannedProducts;
 	private Cart cart;
@@ -46,5 +48,13 @@ public class Survey {
 		server = new ScannerServer(this);
 
 		(new Thread(server)).start();
+	}
+	
+	public static void turnSurveyOn(){
+		SURVEY_ON = true;
+	}
+	
+	public static void turnSurveyOff(){
+		SURVEY_ON = false;
 	}
 }

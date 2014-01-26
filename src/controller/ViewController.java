@@ -10,7 +10,6 @@ import view.MainWindow;
 import view.PaymentView;
 import view.ProductView;
 import view.QuestionView;
-import view.SurveyView;
 
 public class ViewController {
 
@@ -44,7 +43,6 @@ public class ViewController {
 		views.add(PaymentView.getInstance(counterNumber));
 		views.add(ProductView.getInstance(counterNumber));
 		views.add(QuestionView.getInstance(counterNumber));
-		views.add(SurveyView.getInstance(counterNumber));
 	}
 
 	public void showView(String name) {

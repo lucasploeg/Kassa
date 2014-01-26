@@ -11,6 +11,8 @@ import controller.ViewController;
 
 public class Counter {
 	
+	public boolean SURVEY_TURNED_ON = false;
+	
 	private static final String helloMsg = "Dag";
 	private static final String question = "Wilt u afrekenen?";
 	private static final String answerYes = "Ja";

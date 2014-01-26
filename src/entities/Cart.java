@@ -3,6 +3,9 @@ package entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import view.BarcodeView;
+import controller.ViewController;
+
 public class Cart {
 
 	private String customerFirstName;
@@ -14,7 +17,7 @@ public class Cart {
 	public Cart(int counterNumber) {
 		this.counterNumber = counterNumber;
 		productList = new HashMap<Product, Integer>();
-
+		
 		//temp with dummy data
 		setData();
 	}

@@ -5,7 +5,7 @@ import model.CounterModel;
 
 
 public class Start {
-
+	
 	public static void main(String[] args){
 		
 		try {
