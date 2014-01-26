@@ -31,7 +31,8 @@ public class CounterModel {
 
 		Counter counter = new Counter(counterNumber);
 		counters.add(counter);
-
+		counter.initateViewController();
+		
 		return true;
 	}
 

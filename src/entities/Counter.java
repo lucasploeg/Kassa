@@ -3,9 +3,10 @@ package entities;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import controller.ViewController;
-
+import model.APIServer;
 import model.BarcodeModel;
+import controller.ProductController;
+import controller.ViewController;
 
 
 public class Counter {
@@ -16,15 +17,17 @@ public class Counter {
 	private static final String answerNo = "Nee";
 	private static final String notAllProductsScanned = "Niet alle producten zijn door de klant gescand.";
 	
-	private ViewController viewController;
 	private int counterNumber;
 	private ArrayList<Cart> carts;
 	private boolean active = false;
 	
 	public Counter(int counterNumber){
 		this.counterNumber = counterNumber;
-		carts = new ArrayList<Cart>();
-		viewController = ViewController.getInstance(getCounterNumber());
+		carts = new ArrayList<Cart>();	
+	}
+	
+	public void initateViewController(){
+		ViewController.getInstance(getCounterNumber());
 	}
 	
 	public int getCounterNumber(){
@@ -35,9 +38,14 @@ public class Counter {
 		return BarcodeModel.getInstance().getQR(counterNumber);
 	}
 	
-	public void retrieveCurrentCustomerCart(){
+	public void scanForIncomingCarts(){
+		APIServer apis = new APIServer(counterNumber);
+	}
+	
+	public void initiateNewCart(){
 		Cart cart = new Cart(counterNumber);
 		carts.add(cart);
+		ProductController.getInstance(counterNumber).prepareCartForView();
 	}
 	
 	public Cart getCurrentCart(){

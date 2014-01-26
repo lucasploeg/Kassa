@@ -1,14 +1,19 @@
 package view;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import model.CounterModel;
 import controller.BarcodeController;
+import controller.ViewController;
 
 public class BarcodeView extends JPanel{
 	
@@ -18,7 +23,7 @@ public class BarcodeView extends JPanel{
 	
 	JLabel lblQuestion;
 	
-	private BarcodeView(int counterNumber) {
+	private BarcodeView(int counterNumber) {		
 		setLayout(null);
 		this.counterNumber = counterNumber;
 		lblQuestion = new JLabel("lblQuestion");
@@ -54,5 +59,14 @@ public class BarcodeView extends JPanel{
 		JLabel lblQR = new JLabel("", image, JLabel.CENTER);
 		lblQR.setBounds(383, 258, 225, 239);
 		add(lblQR);
+		
+		JButton btnGaVerdertemp = new JButton("Ga verder (temp)");
+		btnGaVerdertemp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ViewController.getInstance(1).showView(ProductView.NAME);
+			}
+		});
+		btnGaVerdertemp.setBounds(78, 53, 148, 23);
+		add(btnGaVerdertemp);
 	}
 }

@@ -9,11 +9,11 @@ import java.net.Socket;
 
 import entities.Survey;
 
-public class Server implements Runnable {
+public class ScannerServer implements Runnable {
 
 	private Survey survey;
 	
-	public Server(Survey survey){
+	public ScannerServer(Survey survey){
 		this.survey = survey;
 	}
 	

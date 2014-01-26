@@ -15,6 +15,7 @@ public class Cart {
 		this.counterNumber = counterNumber;
 		productList = new HashMap<Product, Integer>();
 
+		//temp with dummy data
 		setData();
 	}
 
@@ -55,7 +56,10 @@ public class Cart {
 	private void setData() {
 		customerFirstName = "Lucas";
 		customerLastName = "Ploeg";
-		Product product = new Product("EAN123","Cola",1.3);
-		productList.put(product, 13);
+		
+		Product product = new Product("EAN123","Cola",1.32);
+		productList.put(product, 1);
+		Product product2 = new Product("EAN124","Brood",1.20);
+		productList.put(product2, 2);
 	}
 }

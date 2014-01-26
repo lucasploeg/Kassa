@@ -1,39 +1,26 @@
-import controller.ViewController;
-import model.BankModel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import model.CounterModel;
-import view.MainWindow;
-import entities.Cart;
-import entities.Counter;
 
 
 public class Start {
 
 	public static void main(String[] args){
 		
-		CounterModel.getInstance().initiateNewCounter(1);
+		try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 		
-		/*MainWindow mw = MainWindow.getInstance();
-		System.out.println(mw);
-		
-		BankModel bm = BankModel.getInstance();
-		System.out.println(bm);
-		
-		Counter cnt = new Counter(1);
-		System.out.println(cnt.getCounterQR());
-		
-		CounterModel.getInstance().initiateNewCounter(1);
-		Counter cnt2 = CounterModel.getInstance().getCounter(1);
-		
-		cnt.retrieveCurrentCustomerCart();
-		Cart cart = cnt.getCurrentCart();
-		System.out.println(cart.getCartPrice());
-		
-		cart.initiateSurvey();
-		
-		System.out.println(cart.getSurvey().productsLeftToCheck());
-		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN123"));
-		System.out.println(cart.getSurvey().productsLeftToCheck());
-		System.out.println(cart.getSurvey().productIsScannedByCustomer("EAN125"));*/		
+		CounterModel.getInstance().initiateNewCounter(1);	
 	}
 	
 }

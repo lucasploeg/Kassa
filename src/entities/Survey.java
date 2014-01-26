@@ -3,7 +3,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.Server;
+import model.ScannerServer;
 
 
 public class Survey {
@@ -11,7 +11,7 @@ public class Survey {
 	private static final int productsToCheck = 5;
 	private ArrayList<String> scannedProducts;
 	private Cart cart;
-	private Server server;
+	private ScannerServer server;
 
 	public Survey(Cart cart) {
 		this.cart = cart;
@@ -43,7 +43,7 @@ public class Survey {
 	}
 
 	private void createScanner() {
-		server = new Server(this);
+		server = new ScannerServer(this);
 
 		(new Thread(server)).start();
 	}

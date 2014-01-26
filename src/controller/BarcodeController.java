@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import model.BarcodeModel;
+import model.CounterModel;
 
 public class BarcodeController {
 
@@ -12,6 +13,7 @@ public class BarcodeController {
 
 	private BarcodeController(int counterNumber) {
 		this.counterNumber = counterNumber;
+		CounterModel.getInstance().getCounter(counterNumber).scanForIncomingCarts();
 	}
 
 	public static BarcodeController getInstance(int counterNumber) {
