@@ -26,7 +26,7 @@ public class ScannerServer implements Runnable {
 
 		try {
 			serverSocket = new ServerSocket(8888);
-			System.out.println("Listening :8888");
+			System.out.println("Listening for products.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,21 +42,24 @@ public class ScannerServer implements Runnable {
 				InetAddress IP = socket.getInetAddress();
 				String EAN = dataInputStream.readUTF();
 				
-				System.out.println("ip: " + IP);
-				System.out.println("message: " + EAN);
+				//System.out.println("ip: " + IP);
+				//System.out.println("message: " + EAN);
 				
 				survey.addProductToScannedList(EAN);
+				//System.out.println("From server: " + survey);
 				
-				System.out.println("Left: " + survey.productsLeftToCheck());
+				//System.out.println("Left: " + survey.productsLeftToCheck());
 				
-				if(survey.productsLeftToCheck() == 0){
+				/*if(survey.productsLeftToCheck() == 0){
 					dataOutputStream.writeUTF("quit");
 					socket.close();
 					dataInputStream.close();
 					dataOutputStream.close();
 				} else {
 					dataOutputStream.writeUTF("continue");
-				}	
+				}	*/
+				
+				dataOutputStream.writeUTF("continue");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

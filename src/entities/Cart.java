@@ -60,9 +60,11 @@ public class Cart {
 		customerFirstName = "Lucas";
 		customerLastName = "Ploeg";
 		
-		Product product = new Product("EAN123","Cola",1.32);
+		Product product = new Product("12344223323222","Duo Penotti",1.32);
 		productList.put(product, 1);
-		Product product2 = new Product("EAN124","Brood",1.20);
+		Product product2 = new Product("8710458011818","Pindakaas",1.20);
 		productList.put(product2, 2);
+		Product product3 = new Product("8711000306161","Thee",1.44);
+		productList.put(product3, 1);
 	}
 }
