@@ -60,8 +60,8 @@ public class Cart {
 		customerIsMale = true;
 		customerLastName = "Ploeg";
 		
-		Product product = new Product("12344223323222","Duo Penotti",1.32);
-		productList.put(product, 1);
+		//Product product = new Product("12344223323222","Duo Penotti",1.32);
+		//productList.put(product, 1);
 		Product product2 = new Product("8710458011818","Pindakaas",1.20);
 		productList.put(product2, 2);
 		Product product3 = new Product("8711000306161","Thee",1.44);

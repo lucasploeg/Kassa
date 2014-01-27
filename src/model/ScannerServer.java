@@ -12,9 +12,13 @@ import entities.Survey;
 public class ScannerServer implements Runnable {
 
 	private Survey survey;
+	private int port;
 	
 	public ScannerServer(Survey survey){
 		this.survey = survey;
+		
+		String portStr = "888" + Integer.toString(survey.getCart().getCounterNumber());
+		port = Integer.parseInt(portStr);
 	}
 	
 	@Override
@@ -25,7 +29,7 @@ public class ScannerServer implements Runnable {
 		DataOutputStream dataOutputStream = null;
 
 		try {
-			serverSocket = new ServerSocket(8888);
+			serverSocket = new ServerSocket(port);
 			System.out.println("Listening for products.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -50,16 +54,16 @@ public class ScannerServer implements Runnable {
 				
 				//System.out.println("Left: " + survey.productsLeftToCheck());
 				
-				/*if(survey.productsLeftToCheck() == 0){
+				if(survey.productsLeftToCheck() == 0){
 					dataOutputStream.writeUTF("quit");
 					socket.close();
 					dataInputStream.close();
 					dataOutputStream.close();
 				} else {
 					dataOutputStream.writeUTF("continue");
-				}	*/
+				}
 				
-				dataOutputStream.writeUTF("continue");
+				//dataOutputStream.writeUTF("continue");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

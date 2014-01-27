@@ -50,7 +50,7 @@ public class ProductView extends JPanel {
 		
 		table.setShowGrid(false);
 		table.setEnabled(false);
-		table.setFont(new Font("Tahoma", Font.BOLD, 18));
+		table.setFont(new Font("Tahoma", Font.BOLD, 20));
 		table.setTableHeader(null);		
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(209);

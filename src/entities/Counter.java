@@ -42,6 +42,8 @@ public class Counter {
 	
 	public void scanForIncomingCarts(){
 		APIServer apis = new APIServer(counterNumber);
+		
+		new Thread(apis).start();		
 	}
 	
 	public void initiateNewCart(){

@@ -72,6 +72,10 @@ public class Survey {
 		return productsToCheck; 
 	}
 	
+	public Cart getCart(){
+		return cart;
+	}
+	
 	public void setSurveyOK(boolean surveyOK){
 		this.surveyOK = surveyOK;
 	}
