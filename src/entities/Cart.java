@@ -8,7 +8,7 @@ import controller.ViewController;
 
 public class Cart {
 
-	private String customerFirstName;
+	private boolean customerIsMale;
 	private String customerLastName;
 	private int counterNumber;
 	private Survey survey;
@@ -22,8 +22,8 @@ public class Cart {
 		setData();
 	}
 
-	public String getCustomerFirstName() {
-		return customerFirstName;
+	public boolean isCustomerMale() {
+		return customerIsMale;
 	}
 
 	public String getCustomerLastname() {
@@ -57,7 +57,7 @@ public class Cart {
 	}
 
 	private void setData() {
-		customerFirstName = "Lucas";
+		customerIsMale = true;
 		customerLastName = "Ploeg";
 		
 		Product product = new Product("12344223323222","Duo Penotti",1.32);

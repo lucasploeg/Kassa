@@ -15,6 +15,7 @@ public class Survey {
 	private ArrayList<String> scannedProducts;
 	private Cart cart;
 	private ScannerServer server;
+	private boolean surveyOK;
 
 	public Survey(Cart cart) {
 		this.cart = cart;
@@ -69,6 +70,14 @@ public class Survey {
 			return cart.getProductList().size();
 		}
 		return productsToCheck; 
+	}
+	
+	public void setSurveyOK(boolean surveyOK){
+		this.surveyOK = surveyOK;
+	}
+	
+	public boolean getSurveyOK(){
+		return surveyOK;
 	}
 	
 	public static void turnSurveyOn(){

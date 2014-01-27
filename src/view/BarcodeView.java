@@ -67,7 +67,7 @@ public class BarcodeView extends JPanel {
 		JButton btnGaVerdertemp = new JButton("Continue_Temp");
 		btnGaVerdertemp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ViewController.getInstance(1).showView(ProductView.NAME);
+				ViewController.getInstance(counterNumber).showView(QuestionView.NAME);
 			}
 		});
 		btnGaVerdertemp.setBounds(10, 37, 148, 23);

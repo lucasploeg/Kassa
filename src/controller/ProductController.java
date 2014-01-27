@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.CounterModel;
+import view.BarcodeView;
 import view.PaymentView;
 import view.ProductView;
 import entities.Cart;
@@ -32,8 +33,7 @@ public class ProductController {
 	}
 
 	public void prepareCartForView() {
-		Cart cart = CounterModel.getInstance().getCounter(counterNumber)
-				.getCurrentCart();
+		Cart cart = CounterModel.getInstance().getCounter(counterNumber).getCurrentCart();
 		HashMap<Product, Integer> productList = cart.getProductList();
 
 		String data[][] = new String[productList.size()][];
@@ -48,8 +48,7 @@ public class ProductController {
 			String quantity = (value == 1 ? "" : Integer.toString(value));
 			String pricePerOneLbl = (value == 1 ? "" : "à");
 
-			String[] subArray = { key.getName(), quantityLbl, quantity,
-					pricePerOneLbl, String.format("%.2f", key.getPrice()), key.getEAN() };
+			String[] subArray = { key.getName(), quantityLbl, quantity, pricePerOneLbl, String.format("%.2f", key.getPrice()), key.getEAN() };
 
 			data[length] = subArray;
 			length++;
@@ -60,14 +59,20 @@ public class ProductController {
 	}
 
 	public void payButtonPressed() {
-		if (CounterModel.getInstance().getCounter(counterNumber).SURVEY_TURNED_ON) {
-			CounterModel.getInstance().getCounter(counterNumber)
-					.getCurrentCart().initiateSurvey();
+		if (CounterModel.getInstance().getCounter(counterNumber).SURVEY_TURNED_ON && CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getSurvey() == null) {
+			CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().initiateSurvey();
 			ProductView.getInstance(counterNumber).initiateSurvey();
 			(new Thread(new CheckProducts())).start();
 		} else {
-			ViewController.getInstance(counterNumber)
-					.showView(PaymentView.NAME);
+			boolean surveyOK = (CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getSurvey() == null ? true : CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getSurvey().getSurveyOK());
+			
+			if (surveyOK) {
+				ViewController.getInstance(counterNumber).showView(PaymentView.NAME);
+				PaymentView payView = (PaymentView) ViewController.getInstance(counterNumber).getView(PaymentView.NAME);
+				payView.updateGUI();
+			} else {
+				ViewController.getInstance(counterNumber).showView(BarcodeView.NAME);
+			}
 		}
 	}
 
@@ -75,13 +80,11 @@ public class ProductController {
 		@Override
 		public void run() {
 			ArrayList<String> scannedProducts = new ArrayList<String>();
-			Survey survey = CounterModel.getInstance()
-					.getCounter(counterNumber).getCurrentCart().getSurvey();
+			Survey survey = CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getSurvey();
 
 			while (true) {
 				if (survey.getScannedProducts().size() > 0) {
-					String product = survey.getScannedProducts().get(
-							survey.getScannedProducts().size() - 1);
+					String product = survey.getScannedProducts().get(survey.getScannedProducts().size() - 1);
 
 					boolean exists = false;
 
@@ -95,8 +98,7 @@ public class ProductController {
 					if (exists == false) {
 						scannedProducts.add(product);
 
-						boolean scanned = (survey
-								.productIsScannedByCustomer(product) ? true : false);
+						boolean scanned = (survey.productIsScannedByCustomer(product) ? true : false);
 
 						if (scanned == true) {
 							ProductView.getInstance(counterNumber).productScanned(true, product);

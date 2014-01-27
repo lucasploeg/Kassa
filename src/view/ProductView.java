@@ -30,6 +30,9 @@ public class ProductView extends JPanel {
 	private JButton btnPay;
 	private DefaultTableModel tableModel;
 	private ListSelectionModel listSelectionModel;
+	private JLabel lblSurveyFailure;
+	private JLabel lblSurveyFailureEAN;
+	private JLabel lblOtherCounter;
 
 	private ProductView(int counterNumber) {
 		setLayout(null);
@@ -62,7 +65,22 @@ public class ProductView extends JPanel {
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(47, 103, 473, 462);
 		scrollPane.getViewport().setBackground(Color.WHITE);
+		
+		lblSurveyFailure = new JLabel("Product niet door klant gescand:");
+		lblSurveyFailure.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblSurveyFailure.setBounds(544, 103, 437, 71);
+		add(lblSurveyFailure);
+		
+		lblSurveyFailureEAN = new JLabel("1234567891011");
+		lblSurveyFailureEAN.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblSurveyFailureEAN.setBounds(544, 173, 437, 71);
+		add(lblSurveyFailureEAN);
 		add(scrollPane);
+		
+		lblOtherCounter = new JLabel("Doorverwijzing andere kassa.");
+		lblOtherCounter.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblOtherCounter.setBounds(544, 240, 437, 71);
+		add(lblOtherCounter);
 		
 		JLabel lblProducts = new JLabel("Producten");
 		lblProducts.setHorizontalAlignment(SwingConstants.CENTER);
@@ -76,7 +94,7 @@ public class ProductView extends JPanel {
 		lblPrice.setBounds(524, 14, 473, 71);
 		add(lblPrice);
 		
-		lblPriceEuros = new JLabel("\u20AC 88,88");
+		lblPriceEuros = new JLabel("");
 		lblPriceEuros.setFont(new Font("Tahoma", Font.BOLD, 75));
 		lblPriceEuros.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPriceEuros.setBounds(544, 107, 437, 204);
@@ -115,6 +133,10 @@ public class ProductView extends JPanel {
 		}
 
 		tableModel.fireTableDataChanged();
+		
+		lblSurveyFailure.setVisible(false);
+		lblSurveyFailureEAN.setVisible(false);
+		lblOtherCounter.setVisible(false);
 	}
 	
 	public void setLblPrice(){
@@ -153,10 +175,20 @@ public class ProductView extends JPanel {
 			lblPriceEuros.setText(survey.getScanned() + " / " + survey.getProductsToCheck());
 			
 			if(survey.getScanned() == survey.getProductsToCheck()){
+				survey.setSurveyOK(true);
 				btnPay.setEnabled(true);
 			}
 		} else {
-			//not scanned.
+			survey.setSurveyOK(false);
+			
+			lblSurveyFailureEAN.setText(EAN);
+			btnPay.setText("OK");
+			
+			btnPay.setEnabled(true);
+			lblSurveyFailure.setVisible(true);
+			lblSurveyFailureEAN.setVisible(true);
+			lblOtherCounter.setVisible(true);
+			lblPriceEuros.setVisible(false);
 		}
 	}
 }
