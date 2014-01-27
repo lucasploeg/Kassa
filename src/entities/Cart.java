@@ -8,18 +8,23 @@ import controller.ViewController;
 
 public class Cart {
 
+	private int customerID;
 	private boolean customerIsMale;
 	private String customerLastName;
 	private int counterNumber;
 	private Survey survey;
 	private HashMap<Product, Integer> productList;
 
-	public Cart(int counterNumber) {
+	public Cart(int counterNumber, HashMap<Product, Integer> productList, int customerID, boolean customerIsMale, String customerLastName) {
 		this.counterNumber = counterNumber;
 		productList = new HashMap<Product, Integer>();
 		
 		//temp with dummy data
 		setData();
+	}
+	
+	public int getCustomerID(){
+		return customerID;
 	}
 
 	public boolean isCustomerMale() {

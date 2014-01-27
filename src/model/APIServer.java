@@ -1,16 +1,21 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.internal.LinkedTreeMap;
+
+import entities.Product;
 
 public class APIServer implements Runnable {
 
@@ -23,14 +28,13 @@ public class APIServer implements Runnable {
 		port = Integer.parseInt(portStr);
 		
 		//temp dummy cart
-		CounterModel.getInstance().getCounter(counterNumber).initiateNewCart();
+		//CounterModel.getInstance().getCounter(counterNumber).initiateNewCart();
 	}
 	
 	@Override
 	public void run() {
 		ServerSocket serverSocket = null;
 		Socket socket = null;
-		DataInputStream dataInputStream = null;
 		DataOutputStream dataOutputStream = null;
 
 		try {
@@ -55,13 +59,9 @@ public class APIServer implements Runnable {
 			        responseStrBuilder.append(inputStr);
 			    JsonParser parser = new JsonParser();
 			    JsonObject json = (JsonObject) parser.parse(responseStrBuilder.toString());
-			    
-				/*InetAddress IP = socket.getInetAddress();
-				String line = dataInputStream.readUTF();
-				System.out.println("-- API Server");
-				System.out.println("ip: " + IP);
-				System.out.println("message: " + line);*/
 				
+			    initiateCart(json);
+			    
 				boolean success = true;
 				boolean end = true;
 				if(end){
@@ -74,9 +74,9 @@ public class APIServer implements Runnable {
 					}
 					
 					dataOutputStream.writeUTF(message);
-					socket.close();
-					dataInputStream.close();
+					streamReader.close();
 					dataOutputStream.close();
+					socket.close();				
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -90,16 +90,6 @@ public class APIServer implements Runnable {
 						e.printStackTrace();
 					}
 				}
-
-				if (dataInputStream != null) {
-					try {
-						dataInputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
 				if (dataOutputStream != null) {
 					try {
 						dataOutputStream.close();
@@ -110,5 +100,45 @@ public class APIServer implements Runnable {
 				}
 			}
 		}
+	}
+	
+	public void initiateCart(JsonObject json){
+		HashMap<Product, Integer> productList = new HashMap<Product, Integer>();
+		
+		JsonArray resultCustomer = json.get("userInformation").getAsJsonArray();
+		ArrayList userList = new Gson().fromJson(resultCustomer, ArrayList.class);	
+		
+		int userID = -1;
+		String lastName = "";
+		String gender = "";
+		
+		for (int i = 0; i < userList.size(); i++) {
+			LinkedTreeMap ltm = (LinkedTreeMap) userList.get(i);
+			
+			userID = Integer.parseInt((String)ltm.get("userid"));
+			lastName = (String) ltm.get("surname");
+			gender = (String) ltm.get("gender");
+			
+			//System.out.println(userID + "/" + lastName + "/" + gender);
+		}
+		
+		JsonArray resultProducts = json.get("products").getAsJsonArray();
+		ArrayList productListAL = new Gson().fromJson(resultProducts, ArrayList.class);	
+		
+		for (int i = 0; i < productList.size(); i++) {
+			LinkedTreeMap ltm = (LinkedTreeMap) productListAL.get(i);
+			
+			String ean = (String) ltm.get("ean_code");
+			String name = (String) ltm.get("name");
+			int amount = Integer.parseInt((String) ltm.get("amount"));
+			Double price = (Double.parseDouble((String) ltm.get("price"))/100);
+			
+			Product product = new Product(ean,name,price);
+			productList.put(product, amount);
+			//System.out.println(ean + "/" + name + "/" + amount + "/" + price);
+		}
+		
+		boolean customerIsMale = (gender.equals("m") ? true : false);
+		CounterModel.getInstance().getCounter(counterNumber).initiateNewCart(counterNumber,productList,userID,customerIsMale,lastName);
 	}
 }

@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.APIServer;
 import model.BarcodeModel;
@@ -46,8 +47,8 @@ public class Counter {
 		new Thread(apis).start();		
 	}
 	
-	public void initiateNewCart(){
-		Cart cart = new Cart(counterNumber);
+	public void initiateNewCart(int counterNumber, HashMap<Product, Integer> productList, int customerID, boolean customerIsMale, String customerLastName){
+		Cart cart = new Cart(counterNumber, productList, customerID, customerIsMale, customerLastName);
 		carts.add(cart);
 		ProductController.getInstance(counterNumber).prepareCartForView();
 	}
