@@ -61,6 +61,7 @@ public class ScannerServer implements Runnable {
 					System.out.println("Left: " + survey.productsLeftToCheck());
 
 					if (survey.productsLeftToCheck() == 1 || !survey.getSurveyActive()) {
+						dataOutputStream.writeUTF("quit");
 						closeSocket();
 					} else {
 						dataOutputStream.writeUTF("continue");
@@ -68,34 +69,7 @@ public class ScannerServer implements Runnable {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				if (socket != null) {
-					try {
-						socket.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				if (dataInputStream != null) {
-					try {
-						dataInputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-
-				if (dataOutputStream != null) {
-					try {
-						dataOutputStream.close();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				System.out.println("Socket is already closed. No further input needed.");
 			}
 		}
 	}
@@ -103,12 +77,12 @@ public class ScannerServer implements Runnable {
 	public void closeSocket() {
 		try {
 			System.out.println("Closing socket for scanner.");
-			dataOutputStream.writeUTF("quit");
+			running = false;
+			// dataOutputStream.writeUTF("quit");
 			socket.close();
 			dataInputStream.close();
 			dataOutputStream.close();
 			serverSocket.close();
-			running = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
