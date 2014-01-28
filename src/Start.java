@@ -22,5 +22,4 @@ public class Start {
 		
 		CounterModel.getInstance().initiateNewCounter(1);	
 	}
-	
 }

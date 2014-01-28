@@ -50,6 +50,7 @@ public class QuestionView extends JPanel{
 		JButton btnNo = new JButton("Nee");
 		btnNo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				CounterModel.getInstance().getCounter(counterNumber).scanForIncomingCarts();
 				ViewController.getInstance(counterNumber).showView(BarcodeView.NAME);
 			}
 		});
