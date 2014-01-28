@@ -72,8 +72,11 @@ public class BarcodeView extends JPanel {
 		});
 		btnGaVerdertemp.setBounds(10, 37, 148, 23);
 		add(btnGaVerdertemp);
+		btnGaVerdertemp.setVisible(true);
 
 		checkSurvey = new JCheckBox("Survey on (PoC purposes)");
+		checkSurvey.setSelected(true);
+		CounterModel.getInstance().getCounter(counterNumber).SURVEY_TURNED_ON = true;
 		checkSurvey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (checkSurvey.isSelected()) {

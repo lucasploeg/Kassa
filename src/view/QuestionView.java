@@ -67,7 +67,6 @@ public class QuestionView extends JPanel{
 			instances.put(counterNumber, instance);
 		}
 
-		instance.updateGUI();
 		return instance;
 	}
 	

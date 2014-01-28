@@ -1,7 +1,9 @@
 package view;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -57,12 +59,15 @@ public class MainWindow {
 		mainFrame.setBounds(100, 100, 1009, 632);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.getContentPane().setLayout(null);
-
+		mainFrame.setResizable( false );
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		mainFrame.setLocation(dim.width/2-mainFrame.getSize().width/2, dim.height/2-mainFrame.getSize().height/2);		
+		
 		mainPanel = new JPanel();
 		mainPanel.setBounds(0, 0, 1000, 600);
 		mainFrame.getContentPane().add(mainPanel);
 		mainPanel.setLayout(new CardLayout(0, 0));
-
+		
 		layout = (CardLayout) (mainPanel.getLayout());
 
 		for (JPanel view : ViewController.getInstance(counterNumber).getViews()) {

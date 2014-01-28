@@ -16,6 +16,7 @@ public class Survey {
 	private Cart cart;
 	private ScannerServer server;
 	private boolean surveyOK;
+	private boolean surveyActive = true;
 
 	public Survey(Cart cart) {
 		this.cart = cart;
@@ -77,11 +78,16 @@ public class Survey {
 	}
 	
 	public void setSurveyOK(boolean surveyOK){
+		this.surveyActive = false;
 		this.surveyOK = surveyOK;
 	}
 	
 	public boolean getSurveyOK(){
 		return surveyOK;
+	}
+	
+	public boolean getSurveyActive(){
+		return surveyActive;
 	}
 	
 	public static void turnSurveyOn(){

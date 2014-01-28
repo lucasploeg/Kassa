@@ -21,16 +21,16 @@ public class APIServer implements Runnable {
 
 	private int counterNumber;
 	private int port;
-	
-	public APIServer(int counterNumber){
+
+	public APIServer(int counterNumber) {
 		this.counterNumber = counterNumber;
 		String portStr = "88" + Integer.toString(counterNumber) + "8";
 		port = Integer.parseInt(portStr);
-		
-		//temp dummy cart
-		//CounterModel.getInstance().getCounter(counterNumber).initiateNewCart();
+
+		// temp dummy cart
+		CounterModel.getInstance().getCounter(counterNumber).initiateDummyCart();
 	}
-	
+
 	@Override
 	public void run() {
 		ServerSocket serverSocket = null;
@@ -48,35 +48,36 @@ public class APIServer implements Runnable {
 		while (true) {
 			try {
 				socket = serverSocket.accept();
-				dataOutputStream = new DataOutputStream(
-						socket.getOutputStream());
-				
-				BufferedReader streamReader = new BufferedReader(new InputStreamReader(socket.getInputStream())); 
-			    StringBuilder responseStrBuilder = new StringBuilder();
+				dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-			    String inputStr;
-			    while ((inputStr = streamReader.readLine()) != null)
-			        responseStrBuilder.append(inputStr);
-			    JsonParser parser = new JsonParser();
-			    JsonObject json = (JsonObject) parser.parse(responseStrBuilder.toString());
-				
-			    initiateCart(json);
-			    
+				BufferedReader streamReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				StringBuilder responseStrBuilder = new StringBuilder();
+
+				String inputStr;
+				while ((inputStr = streamReader.readLine()) != null) {
+					responseStrBuilder.append(inputStr);
+					System.out.println(inputStr);
+				}
+				JsonParser parser = new JsonParser();
+				JsonObject json = (JsonObject) parser.parse(responseStrBuilder.toString());
+
+				initiateCart(json);
+
 				boolean success = true;
 				boolean end = true;
-				if(end){
+				if (end) {
 					String message;
-					
-					if(success){
+
+					if (success) {
 						message = "OK";
 					} else {
 						message = "NotOK";
 					}
-					
+
 					dataOutputStream.writeUTF(message);
 					streamReader.close();
 					dataOutputStream.close();
-					socket.close();				
+					socket.close();
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -101,44 +102,38 @@ public class APIServer implements Runnable {
 			}
 		}
 	}
-	
-	public void initiateCart(JsonObject json){
+
+	private void initiateCart(JsonObject json) {		
 		HashMap<Product, Integer> productList = new HashMap<Product, Integer>();
-		
-		JsonArray resultCustomer = json.get("userInformation").getAsJsonArray();
-		ArrayList userList = new Gson().fromJson(resultCustomer, ArrayList.class);	
 		
 		int userID = -1;
 		String lastName = "";
 		String gender = "";
 		
-		for (int i = 0; i < userList.size(); i++) {
-			LinkedTreeMap ltm = (LinkedTreeMap) userList.get(i);
-			
-			userID = Integer.parseInt((String)ltm.get("userid"));
-			lastName = (String) ltm.get("surname");
-			gender = (String) ltm.get("gender");
-			
-			//System.out.println(userID + "/" + lastName + "/" + gender);
-		}
-		
+		JsonObject jsonUserInformation = (JsonObject) json.get("userInformation");
+		userID = Integer.parseInt(jsonUserInformation.get("userid").toString());
+		lastName = jsonUserInformation.get("surname").toString();
+		lastName = lastName.substring(1,lastName.length());
+		gender = jsonUserInformation.get("gender").toString();
+
 		JsonArray resultProducts = json.get("products").getAsJsonArray();
-		ArrayList productListAL = new Gson().fromJson(resultProducts, ArrayList.class);	
+		ArrayList productListAL = new Gson().fromJson(resultProducts, ArrayList.class);
 		
-		for (int i = 0; i < productList.size(); i++) {
+		for (int i = 0; i < productListAL.size(); i++) {
 			LinkedTreeMap ltm = (LinkedTreeMap) productListAL.get(i);
-			
+
 			String ean = (String) ltm.get("ean_code");
 			String name = (String) ltm.get("name");
 			int amount = Integer.parseInt((String) ltm.get("amount"));
-			Double price = (Double.parseDouble((String) ltm.get("price"))/100);
-			
-			Product product = new Product(ean,name,price);
+			Double price = (Double) ltm.get("price")/100;
+
+			Product product = new Product(ean, name, price);
 			productList.put(product, amount);
-			//System.out.println(ean + "/" + name + "/" + amount + "/" + price);
 		}
-		
+
+		gender = gender.substring(1, gender.length());		
 		boolean customerIsMale = (gender.equals("m") ? true : false);
-		CounterModel.getInstance().getCounter(counterNumber).initiateNewCart(counterNumber,productList,userID,customerIsMale,lastName);
+		
+		CounterModel.getInstance().getCounter(counterNumber).initiateNewCart(counterNumber, productList, userID, customerIsMale, lastName);
 	}
 }
