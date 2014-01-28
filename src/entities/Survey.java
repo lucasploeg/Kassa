@@ -80,6 +80,7 @@ public class Survey {
 	public void setSurveyOK(boolean surveyOK){
 		this.surveyActive = false;
 		this.surveyOK = surveyOK;
+		server.closeSocket();
 	}
 	
 	public boolean getSurveyOK(){

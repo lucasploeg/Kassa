@@ -14,6 +14,12 @@ public class ScannerServer implements Runnable {
 	private Survey survey;
 	private int port;
 
+	private ServerSocket serverSocket;
+	private Socket socket;
+	private DataInputStream dataInputStream;
+	private DataOutputStream dataOutputStream;
+	private boolean running = true;
+
 	public ScannerServer(Survey survey) {
 		this.survey = survey;
 
@@ -23,10 +29,10 @@ public class ScannerServer implements Runnable {
 
 	@Override
 	public void run() {
-		ServerSocket serverSocket = null;
-		Socket socket = null;
-		DataInputStream dataInputStream = null;
-		DataOutputStream dataOutputStream = null;
+		serverSocket = null;
+		socket = null;
+		dataInputStream = null;
+		dataOutputStream = null;
 
 		try {
 			serverSocket = new ServerSocket(port);
@@ -36,7 +42,7 @@ public class ScannerServer implements Runnable {
 			e.printStackTrace();
 		}
 
-		while (true) {
+		while (running) {
 			try {
 				if (!serverSocket.isClosed()) {
 					socket = serverSocket.accept();
@@ -55,12 +61,7 @@ public class ScannerServer implements Runnable {
 					System.out.println("Left: " + survey.productsLeftToCheck());
 
 					if (survey.productsLeftToCheck() == 1 || !survey.getSurveyActive()) {
-						System.out.println("Closing socket for scanner.");
-						dataOutputStream.writeUTF("quit");
-						socket.close();
-						dataInputStream.close();
-						dataOutputStream.close();
-						serverSocket.close();
+						closeSocket();
 					} else {
 						dataOutputStream.writeUTF("continue");
 					}
@@ -96,6 +97,21 @@ public class ScannerServer implements Runnable {
 					}
 				}
 			}
+		}
+	}
+
+	public void closeSocket() {
+		try {
+			System.out.println("Closing socket for scanner.");
+			dataOutputStream.writeUTF("quit");
+			socket.close();
+			dataInputStream.close();
+			dataOutputStream.close();
+			serverSocket.close();
+			running = false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

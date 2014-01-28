@@ -81,9 +81,7 @@ public class PaymentView extends JPanel {
 			lblPaying.setText(paying);
 			int pin = 1234;
 			if (BankModel.getInstance().pinNumberIsOk(pin)) {
-				if (BankModel.getInstance().transactionIsOk(
-						CounterModel.getInstance().getCounter(counterNumber)
-								.getCurrentCart().getCartPrice())) {
+				if (BankModel.getInstance().transactionIsOk(CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getCartPrice())) {
 
 					for (int i = 0; i < 3; i++) {
 						sleep(1000);
@@ -102,11 +100,9 @@ public class PaymentView extends JPanel {
 						lblShutdown.setText(lblShutdown.getText() + ". ");
 					}
 					sleep(1300);
-					ViewController.getInstance(counterNumber).showView(
-							BarcodeView.NAME);
-				} else if (!BankModel.getInstance().transactionIsOk(
-						CounterModel.getInstance().getCounter(counterNumber)
-								.getCurrentCart().getCartPrice())) {
+					CounterModel.getInstance().getCounter(counterNumber).scanForIncomingCarts();
+					ViewController.getInstance(counterNumber).showView(BarcodeView.NAME);
+				} else if (!BankModel.getInstance().transactionIsOk(CounterModel.getInstance().getCounter(counterNumber).getCurrentCart().getCartPrice())) {
 					// Not enough money. For PoC not needed.
 				}
 			} else if (!BankModel.getInstance().pinNumberIsOk(pin)) {

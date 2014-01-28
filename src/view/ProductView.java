@@ -137,6 +137,9 @@ public class ProductView extends JPanel {
 		lblSurveyFailure.setVisible(false);
 		lblSurveyFailureEAN.setVisible(false);
 		lblOtherCounter.setVisible(false);
+		lblPrice.setText("Totaalbedrag");
+		btnPay.setText("Betalen");
+		lblPriceEuros.setVisible(true);
 	}
 	
 	public void setLblPrice(){
